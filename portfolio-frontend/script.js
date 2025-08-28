@@ -199,6 +199,14 @@ async function handleQuery(question) {
             body: JSON.stringify(payload)
         });
 
+        if (data.error) {
+    const errorMsg = typeof data.error === "string"
+        ? data.error
+        : JSON.stringify(data.error, null, 2);  // pretty-print objects
+    throw new Error(`API Error: ${errorMsg}`);
+}
+
+
         if (!response.ok) {
             const errorBody = await response.json().catch(() => ({ error: 'Could not parse error response.' }));
             const errorMessage = errorBody.error || response.statusText;
