@@ -1,129 +1,89 @@
 import os
 import json
+import logging
 import requests
+from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from dotenv import load_dotenv
 from . import prompts
 
-load_dotenv()
-
-# @csrf_exempt
-# def chat_view(request):
-#     print("API_KEY found?", bool(api_key))
-#     if request.method == 'POST':
-#         try:
-#             data = json.loads(request.body)
-#             user_question = data.get('question')
-#             conversation_history = data.get('history', [])
-#             knowledge_base = data.get('context', '')
-
-#             if not user_question:
-#                 return JsonResponse({'error': 'Question is required'}, status=400)
-
-#             # --- Get the secure OpenRouter API Key ---
-#             api_key = os.environ.get('OPENROUTER_API_KEY')
-#             if not api_key:
-#                 return JsonResponse({'error': 'OPENROUTER_API_KEY not configured on server'}, status=500)
-
-#             # --- Build the full prompt (same as before) ---
-#             full_prompt_for_ai = f"""
-#             {prompts.PROMPTS_CONFIG}
-#             ## My Profile Data (Knowledge Base):
-#             {knowledge_base}
-#             ## User's New Question:
-#             "{user_question}"
-#             """
-            
-#             # --- Call the OpenRouter API ---
-#             api_url = "https://openrouter.ai/api/v1/chat/completions"
-#             headers = {
-#                 "Authorization": f"Bearer {api_key}"
-#             }
-            
-#             # Convert history to the standard OpenAI/OpenRouter format
-#             messages = []
-#             for turn in conversation_history:
-#                  # Skip the very long initial system prompt if it exists in history
-#                 if len(turn['parts'][0]['text']) > 1000:
-#                     continue
-                
-#                 if turn['role'] == 'user':
-#                     messages.append({"role": "user", "content": turn['parts'][0]['text']})
-#                 elif turn['role'] == 'model':
-#                     # OpenRouter uses 'assistant' for the model's role
-#                     messages.append({"role": "assistant", "content": turn['parts'][0]['text']})
-            
-#             # Add the new, fully-contextualized user prompt
-#             messages.append({"role": "user", "content": full_prompt_for_ai})
-            
-#             payload = {
-#                 # We can still use the Google Gemini model through OpenRouter
-#                 "model": "google/gemini-flash-1.5", 
-#                 "messages": messages
-#             }
-
-#             response = requests.post(api_url, headers=headers, json=payload)
-#             response.raise_for_status()
-            
-#             openrouter_response = response.json()
-#             response_text = openrouter_response['choices'][0]['message']['content']
-
-#             return JsonResponse({'reply': response_text})
-
-#         except requests.exceptions.HTTPError as e:
-#             error_details = e.response.json()
-#             return JsonResponse({'error': f"API Error: {error_details}"}, status=e.response.status_code)
-#         except Exception as e:
-#             return JsonResponse({'error': str(e)}, status=500)
-
-#     return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-
-import logging
 logger = logging.getLogger(__name__)
 
 @csrf_exempt
 def chat_view(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            question = data.get("question")
-            history = data.get("history", [])
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-            # Build messages
-            messages = [{"role": "system", "content": "You are a helpful assistant."}]
-            for q, a in history:
-                messages.append({"role": "user", "content": q})
-                messages.append({"role": "assistant", "content": a})
-            messages.append({"role": "user", "content": question})
+    try:
+        body = json.loads(request.body or "{}")
+        user_question = body.get('question')
+        conversation_history = body.get('history', [])
+        knowledge_base = body.get('context', '')
 
-            response = requests.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {settings.OPENROUTER_API_KEY}",
-                    "Content-Type": "application/json",
-                },
-                json={"model": "openai/gpt-4o-mini", "messages": messages},
-                timeout=20
-            )
-            response.raise_for_status()
-            data = response.json()
-            return JsonResponse({"answer": data["choices"][0]["message"]["content"]})
+        if not user_question:
+            return JsonResponse({'error': 'Question is required'}, status=400)
 
-        except requests.exceptions.HTTPError as e:
+        api_key = os.environ.get('OPENROUTER_API_KEY')
+        if not api_key:
+            logger.error("OPENROUTER_API_KEY not found in env")
+            return JsonResponse({'error': 'OPENROUTER_API_KEY not configured on server'}, status=500)
+
+        # Build prompt
+        full_prompt_for_ai = f"""
+{prompts.PROMPTS_CONFIG}
+## My Profile Data (Knowledge Base):
+{knowledge_base}
+## User's New Question:
+"{user_question}"
+""".strip()
+
+        # Convert history to OpenAI/OpenRouter format safely
+        messages = []
+        for turn in conversation_history:
             try:
-                error_details = e.response.json()
+                part_text = turn.get('parts', [{}])[0].get('text', '')
+                if len(part_text) > 1000:
+                    continue
+                role = turn.get('role')
+                if role == 'user':
+                    messages.append({"role": "user", "content": part_text})
+                elif role in ('model', 'assistant'):
+                    messages.append({"role": "assistant", "content": part_text})
+            except Exception:
+                continue
+
+        messages.append({"role": "user", "content": full_prompt_for_ai})
+
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        }
+        payload = {"model": "google/gemini-flash-1.5", "messages": messages}
+
+        resp = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=30,
+        )
+        try:
+            resp.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            # Never assume JSON from upstream
+            try:
+                err_json = resp.json()
             except ValueError:
-                error_details = e.response.text  # fallback if not JSON
-            logger.error(f"HTTPError: {error_details}")
-            return JsonResponse(
-                {"error": f"API Error: {error_details}"}, 
-                status=e.response.status_code
-            )
+                err_json = {"status": resp.status_code, "body": resp.text[:500]}
+            logger.error(f"OpenRouter HTTPError: {err_json}")
+            return JsonResponse({"error": err_json}, status=resp.status_code)
 
-        except Exception as e:
-            logger.exception("Unexpected error in chat_view")
-            return JsonResponse({"error": str(e)}, status=500)
+        # Success path
+        data = resp.json()
+        answer = data["choices"][0]["message"]["content"]
+        return JsonResponse({'reply': answer})
 
-    return JsonResponse({"error": "Invalid request method"}, status=405)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON body'}, status=400)
+    except Exception as e:
+        logger.exception("Unexpected error in chat_view")
+        return JsonResponse({'error': str(e)}, status=500)
