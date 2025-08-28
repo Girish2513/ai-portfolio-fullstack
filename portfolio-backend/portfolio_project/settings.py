@@ -132,3 +132,15 @@ CORS_ALLOWED_ORIGINS = [
     "https://girish-saana.vercel.app/",# Also a common port for Live Server
     # Add other origins if your frontend is served from a different address
 ]
+
+# Since your frontend is sending a JSON payload, you must allow the 'content-type' header.
+CORS_ALLOW_HEADERS = [
+    'content-type',
+]
+
+# You need to allow the POST method for the chat functionality.
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'OPTIONS',
+]
