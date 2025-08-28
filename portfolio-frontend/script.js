@@ -199,23 +199,28 @@ async function handleQuery(question) {
             body: JSON.stringify(payload)
         });
 
-        // Always read the response body as text first
+
+// 🔑 Always read body as text once
 const raw = await response.text();
 
 let data;
 try {
-    data = JSON.parse(raw);   // Try to parse JSON
+    data = JSON.parse(raw);  // If valid JSON
 } catch {
+    // If backend sent plain text or HTML
     throw new Error(`API returned non-JSON (${response.status}): ${raw.slice(0, 300)}`);
 }
 
-// Handle API error cases
+// ✅ Handle backend error case
 if (!response.ok) {
     const errorMsg = typeof data.error === "string"
         ? data.error
         : JSON.stringify(data.error, null, 2);
     throw new Error(`API Error (${response.status}): ${errorMsg}`);
 }
+
+return data;
+
 
 
 
