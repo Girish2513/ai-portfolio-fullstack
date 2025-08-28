@@ -6,8 +6,6 @@ import projectsData from './data/projects.js';
 import achievementsData from './data/achievements.js';
 import contactData from './data/contact.js';
 import professionalData from './data/professional.js';
-const allKnownSkills = Object.values(skillsData).flat();
-
 
 // Combine all data for the knowledge base
 const combinedData = {
@@ -22,47 +20,47 @@ const combinedData = {
 
 // Convert data to text format for AI processing
 function dataToText(data) {
-    let text = # Girish Saana - Professional Portfolio Information\n\n;
-    text += ## Personal Information:\n;
-    text += - Name: ${data.personal.full_name} (Age: ${data.personal.age})\n;
-    text += - Location: ${data.personal.location}\n;
-    text += - Languages: ${data.personal.languages.join(', ')}\n;
-    text += - Family: Father - ${data.personal.family.father}, Mother - ${data.personal.family.mother}\n;
-    text += - Personality: ${data.personal.personality.strengths.join(', ')}\n;
-    text += - Interests: ${data.personal.interests.hobbies.join(', ')}\n\n;
-    text += ## Education:\n;
-    text += - ${data.education.btech.degree} from ${data.education.btech.college} (${data.education.btech.years}) - CGPA: ${data.education.btech.cgpa}\n;
-    text += - ${data.education.intermediate.stream} from ${data.education.intermediate.college} - ${data.education.intermediate.percentage}\n;
-    text += - High School from ${data.education.school.name} - ${data.education.school.cgpa} CGPA\n\n;
-    text += ## Technical Skills:\n;
+    let text = `# Girish Saana - Professional Portfolio Information\n\n`;
+    text += `## Personal Information:\n`;
+    text += `- Name: ${data.personal.full_name} (Age: ${data.personal.age})\n`;
+    text += `- Location: ${data.personal.location}\n`;
+    text += `- Languages: ${data.personal.languages.join(', ')}\n`;
+    text += `- Family: Father - ${data.personal.family.father}, Mother - ${data.personal.family.mother}\n`;
+    text += `- Personality: ${data.personal.personality.strengths.join(', ')}\n`;
+    text += `- Interests: ${data.personal.interests.hobbies.join(', ')}\n\n`;
+    text += `## Education:\n`;
+    text += `- ${data.education.btech.degree} from ${data.education.btech.college} (${data.education.btech.years}) - CGPA: ${data.education.btech.cgpa}\n`;
+    text += `- ${data.education.intermediate.stream} from ${data.education.intermediate.college} - ${data.education.intermediate.percentage}\n`;
+    text += `- High School from ${data.education.school.name} - ${data.education.school.cgpa} CGPA\n\n`;
+    text += `## Technical Skills:\n`;
     Object.entries(data.skills).forEach(([category, skills]) => {
         const formattedCategory = category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-        text += - ${formattedCategory}: ${skills.join(', ')}\n;
+        text += `- ${formattedCategory}: ${skills.join(', ')}\n`;
     });
-    text += \n;
-    text += ## Projects:\n;
+    text += `\n`;
+    text += `## Projects:\n`;
     data.projects.forEach((project, index) => {
-        text += ${index + 1}. ${project.name}:\n;
+        text += `${index + 1}. ${project.name}:\n`;
         text += `   - Description: ${project.description}\n`;
         text += `   - Technologies: ${project.technologies.join(', ')}\n`;
         text += `   - Impact: ${project.impact}\n`;
         text += `   - GitHub: ${project.url}\n\n`;
     });
-    text += ## Professional Goals:\n;
-    text += - Objective: ${data.professional.career_objective}\n;
-    text += - Preferred Roles: ${data.professional.preferred_roles.join(', ')}\n;
-    text += - Industry Interests: ${data.professional.industry_interests.join(', ')}\n\n;
-    text += ## Achievements:\n;
-    text += - Academic: Strong academic record across all levels\n;
-    text += - Technical: Solved 200+ LeetCode problems, Multiple certifications\n;
-    text += - Leadership: Cricket Team Captain, Sports Club Head\n\n;
-    text += ## Contact Information:\n;
-    text += - Email: ${data.contact.email}\n;
-    text += - Phone: ${data.contact.phone}\n;
-    text += - LinkedIn: ${data.contact.social_links.linkedin.url}\n;
-    text += - GitHub: ${data.contact.social_links.github.url}\n;
-    text += - LeetCode: ${data.contact.social_links.leetcode.url}\n;
-    text += - Availability: ${data.contact.availability.status}\n;
+    text += `## Professional Goals:\n`;
+    text += `- Objective: ${data.professional.career_objective}\n`;
+    text += `- Preferred Roles: ${data.professional.preferred_roles.join(', ')}\n`;
+    text += `- Industry Interests: ${data.professional.industry_interests.join(', ')}\n\n`;
+    text += `## Achievements:\n`;
+    text += `- Academic: Strong academic record across all levels\n`;
+    text += `- Technical: Solved 200+ LeetCode problems, Multiple certifications\n`;
+    text += `- Leadership: Cricket Team Captain, Sports Club Head\n\n`;
+    text += `## Contact Information:\n`;
+    text += `- Email: ${data.contact.email}\n`;
+    text += `- Phone: ${data.contact.phone}\n`;
+    text += `- LinkedIn: ${data.contact.social_links.linkedin.url}\n`;
+    text += `- GitHub: ${data.contact.social_links.github.url}\n`;
+    text += `- LeetCode: ${data.contact.social_links.leetcode.url}\n`;
+    text += `- Availability: ${data.contact.availability.status}\n`;
     return text;
 }
 
@@ -89,13 +87,13 @@ const socialLinks = document.getElementById('social-links');
 
 // Event listeners
 askButton.addEventListener('click', () => handleQuery(questionInput.value));
-questionInput.addEventListener('keyup', (event) => { 
-    if (event.key === 'Enter') handleQuery(questionInput.value); 
+questionInput.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') handleQuery(questionInput.value);
 });
 
 quickActionButtons.forEach(button => {
     button.addEventListener('click', () => {
-        let query = Tell me about my ${button.textContent.replace('✨ ','')};
+        let query = `Tell me about my ${button.textContent.replace('✨ ','')}`;
         if (button.textContent.includes('Fun Facts')) query = "Tell me a fun fact about my personality or interests.";
         if (button.textContent.includes('Me')) query = "Tell me a bit about yourself.";
         questionInput.value = query;
@@ -120,8 +118,8 @@ function switchToChatView() {
 }
 
 function markdownToHtml(text) {
-    // Convert bold *text* to <strong>text</strong>
-    text = text.replace(/\\(.?)\\*/g, '<strong>$1</strong>');
+    // Convert bold **text** to <strong>text</strong>
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     // Convert links [text](url) to <a href="url">text</a>
     text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-sm font-semibold hover:underline">$1 &rarr;</a>');
     return text;
@@ -145,8 +143,6 @@ function displayAboutMe(text) {
 
 function displayContactInfo() {
     aiResponseContainer.innerHTML = ''; // Clear the response area
-
-    // Create the HTML content with clickable links
     const contactHTML = `
         <p class="mb-4">I'd love to connect! You can reach me through any of the platforms below. I'm actively looking for new opportunities and typically respond within 24 hours.</p>
         <div class="flex justify-center space-x-6 mt-4">
@@ -156,16 +152,13 @@ function displayContactInfo() {
             <a href="https://github.com/girish2513" target="_blank" class="hover:text-gray-900 dark:hover:text-white transition transform hover:scale-125">
                 <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.65.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
             </a>
-             <a href="mailto:girishsaana2513@gmail.com" class="hover:text-red-600 dark:hover:text-white transition transform hover:scale-125">
+            <a href="mailto:girishsaana2513@gmail.com" class="hover:text-red-600 dark:hover:text-white transition transform hover:scale-125">
                 <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
             </a>
         </div>
     `;
-    
-    // Set the HTML content of the response container
     aiResponseContainer.innerHTML = contactHTML;
 }
-
 
 async function handleQuery(question) {
     const trimmedQuestion = question.trim();
@@ -184,85 +177,55 @@ async function handleQuery(question) {
     stopGenerationButton.classList.add('hidden');
 
     try {
-        // const apiUrl = 'http://127.0.0.1:8000/api/chat/';
-        // const apiUrl = 'https://portfolio-backend.vercel.app/api/chat/';
         const apiUrl = 'https://ai-portfolio-fullstack.vercel.app/api/chat/';
         const payload = {
             question: trimmedQuestion,
             history: conversationHistory,
             context: knowledgeBase
         };
-        
+
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
 
-
-// 🔑 Always read body as text once
-const raw = await response.text();
-
-let data;
-try {
-    data = JSON.parse(raw);  // If valid JSON
-} catch {
-    // If backend sent plain text or HTML
-    throw new Error(API returned non-JSON (${response.status}): ${raw.slice(0, 300)});
-}
-
-// ✅ Handle backend error case
-if (!response.ok) {
-    const errorMsg = typeof data.error === "string"
-        ? data.error
-        : JSON.stringify(data.error, null, 2);
-    throw new Error(API Error (${response.status}): ${errorMsg});
-}
-
-return data;
-
-
-
-
         if (!response.ok) {
             const errorBody = await response.json().catch(() => ({ error: 'Could not parse error response.' }));
             const errorMessage = errorBody.error || response.statusText;
-            throw new Error(API Error: ${errorMessage});
+            throw new Error(`API Error: ${errorMessage}`);
         }
-        
+
         const result = await response.json();
         loader.classList.add('hidden');
 
         if (result.reply) {
             const responseText = result.reply;
-            
+
             conversationHistory.push({ role: "user", parts: [{ text: trimmedQuestion }] });
             conversationHistory.push({ role: "model", parts: [{ text: responseText }] });
-            
+
             const lowerCaseQuestion = trimmedQuestion.toLowerCase();
 
-            // --- THIS LOGIC BLOCK IS NOW FIXED ---
             if (lowerCaseQuestion.includes('contact')) {
-        displayContactInfo();
-            }else if (responseText.includes('::') && lowerCaseQuestion.includes('project')) {
-                // Using the correct function for project cards
+                displayContactInfo();
+            } else if (responseText.includes('::') && lowerCaseQuestion.includes('project')) {
                 displayProjects(responseText);
             } else if (responseText.includes('::') && (lowerCaseQuestion.includes('skill') || lowerCaseQuestion.includes('tech'))) {
                 displaySkills(responseText);
             } else if (lowerCaseQuestion.includes('about yourself') || lowerCaseQuestion.includes('who are you')) {
-                // This check is now more specific and won't trigger on other questions.
                 displayAboutMe(responseText);
             } else {
                 typewriterEffect(responseText);
             }
-            
+
             if (conversationCount === 6) {
                 setTimeout(() => {
-                   const ctaText = By the way, it seems like you're interested in my profile! I'm currently looking for new opportunities. Feel free to reach out to me directly at ${contactData.email} if you'd like to connect.;
-                   const ctaP = document.createElement('p');
-                   ctaP.className = "mt-4 pt-4 border-t border-gray-500/50";
-                   aiResponseContainer.appendChild(ctaP);
-                   typewriterEffect(ctaText, ctaP);
+                    const ctaText = `By the way, it seems like you're interested in my profile! I'm currently looking for new opportunities. Feel free to reach out to me directly at ${contactData.email} if you'd like to connect.`;
+                    const ctaP = document.createElement('p');
+                    ctaP.className = "mt-4 pt-4 border-t border-gray-500/50";
+                    aiResponseContainer.appendChild(ctaP);
+                    typewriterEffect(ctaText, ctaP);
                 }, 2000);
             }
         } else {
@@ -271,7 +234,7 @@ return data;
     } catch (err) {
         console.error("Error:", err);
         loader.classList.add('hidden');
-        typewriterEffect(An error occurred: ${err.message}. Make sure your Django server is running.);
+        typewriterEffect(`An error occurred: ${err.message}. Make sure your Django server is running.`);
     }
 }
 
@@ -288,17 +251,14 @@ function typewriterEffect(text, container = aiResponseContainer) {
     const speed = 2;
     stopGenerationButton.classList.remove('hidden');
 
-    // First, convert the entire response from Markdown to HTML
     const htmlText = markdownToHtml(text);
-    
+
     function type() {
         if (i < htmlText.length) {
-            // Use innerHTML to render the formatted text
             p.innerHTML = htmlText.slice(0, i + 1);
             i++;
             typewriterTimeoutId = setTimeout(type, speed);
         } else {
-            // Ensure the final HTML is perfectly rendered
             p.innerHTML = htmlText;
             stopGenerationButton.classList.add('hidden');
             typewriterTimeoutId = null;
@@ -310,72 +270,52 @@ function typewriterEffect(text, container = aiResponseContainer) {
 function displaySkills(skillData) {
     aiResponseContainer.innerHTML = '';
     const [intro, data] = skillData.split('::');
-    
+
     if (intro && intro.trim()) {
         const introP = document.createElement('p');
         introP.className = 'mb-4';
         aiResponseContainer.appendChild(introP);
         typewriterEffect(intro.trim(), introP);
     }
-    
+
     const icons = {
-        "Programming Languages": <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>,
-        "Machine Learning": <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 21v-1.5M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V8.25a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 8.25v10.5A2.25 2.25 0 006.75 21z" /></svg>,
-        "Data Manipulation": <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>,
-        "Data Visualization": <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>,
-        "Data Structures Algorithms": <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" /></svg>,
-        "Tools Platforms": <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228m15.457 0l3.847 3.846a1.125 1.125 0 01-1.59 1.59l-3.848-3.846m-15.457 0l-3.847 3.846a1.125 1.125 0 001.59 1.59l3.848-3.846M15.457 17.25L12 21m3.457-3.75l-3.457 3.75m0 0l-3.457-3.75m3.457 3.75V3.75" /></svg>,
-        "Databases": <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg>,
-        "Soft Skills": <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
+        "Programming Languages": `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>`,
+        "Machine Learning": `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 21v-1.5M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V8.25a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 8.25v10.5A2.25 2.25 0 006.75 21z" /></svg>`,
+        "Data Manipulation": `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>`,
+        "Data Visualization": `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>`,
+        "Data Structures Algorithms": `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" /></svg>`,
+        "Tools Platforms": `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228m15.457 0l3.847 3.846a1.125 1.125 0 01-1.59 1.59l-3.848-3.846m-15.457 0l-3.847 3.846a1.125 1.125 0 001.59 1.59l3.848-3.846M15.457 17.25L12 21m3.457-3.75l-3.457 3.75m0 0l-3.457-3.75m3.457 3.75V3.75" /></svg>`,
+        "Databases": `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg>`,
+        "Soft Skills": `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>`
     };
-    
+
     if (data && data.trim()) {
         const categories = data.trim().split('|');
-        let followUpParts = [];
-        let followUpStarted = false;
-
         categories.forEach(catString => {
-            if (followUpStarted) {
-                return; // Skip everything after Communication
-            }
-
             const nameIndex = catString.indexOf(':');
-            if (nameIndex === -1) {
-                return; // Skip malformed categories
-            }
-            
-            const categoryName = catString.substring(0, nameIndex);
+            if (nameIndex === -1) return;
+
+            const categoryName = catString.substring(0, nameIndex).trim();
             const skillsString = catString.substring(nameIndex + 1);
 
             const categoryDiv = document.createElement('div');
             categoryDiv.className = 'structured-category mb-4';
             const title = document.createElement('h3');
-            const formattedName = categoryName.trim().replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            title.innerHTML = ${icons[formattedName] || icons["Tools Platforms"]} ${formattedName};
+            const formattedName = categoryName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            title.innerHTML = `${icons[formattedName] || icons["Tools Platforms"]} ${formattedName}`;
+
             const tagsDiv = document.createElement('div');
             tagsDiv.className = 'structured-tags';
 
             if (skillsString) {
                 const skillCandidates = skillsString.split(',');
-                
                 for (const candidate of skillCandidates) {
                     const trimmedCandidate = candidate.trim();
                     if (!trimmedCandidate) continue;
-
-                    if (followUpStarted) {
-                        break; // Stop processing this category if we hit Communication
-                    }
-
                     const tag = document.createElement('span');
                     tag.className = 'structured-tag';
                     tag.textContent = trimmedCandidate;
                     tagsDiv.appendChild(tag);
-                    
-                    // Once we hit "Communication", stop processing everything
-                    if (trimmedCandidate === 'Communication') {
-                        followUpStarted = true;
-                        break;
-                    }
                 }
             }
 
@@ -388,29 +328,25 @@ function displaySkills(skillData) {
     }
 }
 
-
-
 // Enhanced displayProjects function
 function displayProjects(projectData) {
     aiResponseContainer.innerHTML = '';
-    const [intro, data] = projectData.split('::');
-    
+    const [intro] = projectData.split('::');
+
     if (intro && intro.trim()) {
         const introP = document.createElement('p');
         introP.className = 'mb-6';
         aiResponseContainer.appendChild(introP);
         typewriterEffect(intro.trim(), introP);
     }
-    
-    // Create projects grid
+
     const projectsGrid = document.createElement('div');
     projectsGrid.className = 'projects-grid';
-    
-    // Use the enhanced project data instead of parsing from string
+
     projectsData.forEach(project => {
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card glassmorphism rounded-2xl h-80 p-6 flex flex-col justify-end text-white shadow-lg';
-        projectCard.style.backgroundImage = url(${project.image});
+        projectCard.style.backgroundImage = `url(${project.image})`;
         projectCard.onclick = () => openProjectModal(project);
 
         projectCard.innerHTML = `
@@ -419,14 +355,11 @@ function displayProjects(projectData) {
                 <h3 class="text-xl font-bold mb-3">${project.name}</h3>
             </div>
         `;
-
         projectsGrid.appendChild(projectCard);
     });
-    
     aiResponseContainer.appendChild(projectsGrid);
 }
 
-// Project modal functions - ADD THESE NEW FUNCTIONS
 function openProjectModal(project) {
     const modal = document.getElementById('project-modal');
     const modalBody = document.getElementById('modal-body');
@@ -441,7 +374,6 @@ function openProjectModal(project) {
             <h2 class="text-3xl font-bold mb-4">${project.name}</h2>
             <p class="text-lg opacity-80 mb-6">${project.fullDescription}</p>
         </div>
-
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             ${Object.entries(project.metrics).map(([key, value]) => `
                 <div class="text-center p-4 glassmorphism rounded-lg">
@@ -450,7 +382,6 @@ function openProjectModal(project) {
                 </div>
             `).join('')}
         </div>
-
         <div class="mb-8">
             <h3 class="text-xl font-semibold mb-4">Key Highlights</h3>
             <ul class="space-y-2">
@@ -464,16 +395,12 @@ function openProjectModal(project) {
                 `).join('')}
             </ul>
         </div>
-
         <div class="mb-8">
             <h3 class="text-xl font-semibold mb-4">Technologies Used</h3>
             <div class="flex flex-wrap gap-2">
-                ${project.technologies.map(tech => `
-                    <span class="tech-tag">${tech}</span>
-                `).join('')}
+                ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
             </div>
         </div>
-
         <div class="flex items-center justify-between">
             <div class="text-lg">
                 <strong>Impact:</strong> ${project.impact}
@@ -486,7 +413,6 @@ function openProjectModal(project) {
             </a>
         </div>
     `;
-
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -496,30 +422,6 @@ function closeModal() {
     modal.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
-
-// ADD EVENT LISTENERS TO YOUR EXISTING DOMContentLoaded FUNCTION
-// Add this inside your existing document.addEventListener('DOMContentLoaded', () => {}) function
-
-// Modal event listeners
-const closeModalBtn = document.getElementById('close-modal');
-const projectModal = document.getElementById('project-modal');
-
-if (closeModalBtn) {
-    closeModalBtn.onclick = closeModal;
-}
-
-if (projectModal) {
-    projectModal.onclick = (e) => {
-        if (e.target === projectModal) {
-            closeModal();
-        }
-    };
-}
-
-// Escape key to close modal
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-});
 
 function generateClassicView() {
     const container = document.querySelector('#classic-view .classic-view-card');
@@ -535,7 +437,7 @@ function generateClassicView() {
 
 function generateSkillHTML(skills) {
     const allSkills = Object.values(skills).flat();
-    return `<div class="structured-tags">${allSkills.map(s => <span class="structured-tag">${s}</span>).join('')}</div>`;
+    return `<div class="structured-tags">${allSkills.map(s => `<span>${s}</span>`).join('')}</div>`;
 }
 
 function generateProjectHTML(projects) {
@@ -561,8 +463,24 @@ function generateEducationHTML(education) {
     `;
 }
 
-// Background animation and other initialization code (keeping your existing code)
 document.addEventListener('DOMContentLoaded', () => {
+    // Modal event listeners
+    const closeModalBtn = document.getElementById('close-modal');
+    const projectModal = document.getElementById('project-modal');
+    if (closeModalBtn) {
+        closeModalBtn.onclick = closeModal;
+    }
+    if (projectModal) {
+        projectModal.onclick = (e) => {
+            if (e.target === projectModal) {
+                closeModal();
+            }
+        };
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+
     const canvas = document.getElementById('background-canvas');
     const ctx = canvas.getContext('2d');
     let animationFrameId;
@@ -574,7 +492,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Floating Shapes', theme: { mode: 'light', accent: '#3b82f6' }, init: initShapes },
         { name: 'Starfield', theme: { mode: 'dark', accent: '#ffffff' }, init: initStarfield }
     ];
-    
     let currentAnimation = {};
 
     function setupCanvas() {
@@ -591,7 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         root.style.setProperty('--accent-color', theme.accent);
     }
-    
+
     function clearAnimation() {
         if (currentAnimation.stop) {
             currentAnimation.stop();
@@ -610,7 +527,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentAnimation.stop = currentAnimation.init(ctx, canvas);
     }
 
-    // Animation implementations (keeping all your existing animation functions)
     function initDigitalRain(ctx, canvas) {
         const alphabet = 'アアカサタナハマヤャラワガザダバパイィキシチニヒミリィギジヂビピウゥクスツヌフムユュルョグズブズプエェケセテネヘメレェゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         const fontSize = 16;
@@ -675,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animate();
         return () => cancelAnimationFrame(animationFrameId);
     }
-    
+
     function initWaves(ctx, canvas) {
         let time = 0;
         function drawWave(freq, amp, speed, color1, color2) {
@@ -688,8 +604,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.lineTo(canvas.width, canvas.height);
             ctx.closePath();
             const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-            gradient.addColorStop(0, rgba(${color1.r}, ${color1.g}, ${color1.b}, 0.3));
-            gradient.addColorStop(1, rgba(${color2.r}, ${color2.g}, ${color2.b}, 0.3));
+            gradient.addColorStop(0, `rgba(${color1.r}, ${color1.g}, ${color1.b}, 0.3)`);
+            gradient.addColorStop(1, `rgba(${color2.r}, ${color2.g}, ${color2.b}, 0.3)`);
             ctx.fillStyle = gradient;
             ctx.fill();
         }
@@ -714,7 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 height: Math.random() * 100 + 20,
                 speed: Math.random() * 2 + 0.5,
                 rotation: Math.random() * 360,
-                color: rgba(${Math.random() > 0.5 ? '59, 130, 246' : '139, 92, 246'}, 0.15)
+                color: `rgba(${Math.random() > 0.5 ? '59, 130, 246' : '139, 92, 246'}, 0.15)`
             });
         }
         function animate() {
@@ -738,7 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animate();
         return () => cancelAnimationFrame(animationFrameId);
     }
-    
+
     function initStarfield(ctx, canvas) {
         let stars = [];
         for(let i=0; i<500; i++) {
@@ -768,7 +684,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return () => cancelAnimationFrame(animationFrameId);
     }
 
-    // Main execution
     setupCanvas();
     startRandomAnimation();
 
@@ -777,13 +692,10 @@ document.addEventListener('DOMContentLoaded', () => {
         startRandomAnimation();
     });
 
-    // View Counter
     const viewCountEl = document.getElementById('view-count-text');
     const randomViews = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
-    viewCountEl.textContent = ${randomViews} Views;
-    
+    viewCountEl.textContent = `${randomViews} Views`;
 
-    // View Toggler
     const viewToggleButton = document.getElementById('view-toggle');
     const aiView = document.getElementById('ai-view');
     const classicView = document.getElementById('classic-view');
