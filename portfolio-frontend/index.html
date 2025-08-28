@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girish Saana - AI Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+</head>
+<body>
+    <!-- Universal Background Canvas -->
+    <canvas id="background-canvas"></canvas>
+
+    <div id="main-content" class="main-container">
+        <!-- This header is only for the initial view -->
+        <header id="intro-header" class="mb-8 text-center">
+            <img src="https://i.ibb.co/Ndynk5Cq/download-1-removebg-preview.png" alt="Girish Saana" class="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto mb-4 shadow-2xl fade-in-up">
+            <h2 class="text-xl md:text-2xl mb-2 fade-in-up delay-1">Hey, I'm Girish Saana 👋</h2>
+            <h1 class="text-3xl md:text-4xl font-black mt-2 fade-in-up delay-2">Chat with my Digital Twin</h1>
+        </header>
+
+        <!-- This header is for the chat view -->
+        <header id="chat-header" class="hidden w-full max-w-3xl p-4 flex justify-center items-center">
+  <img src="https://i.ibb.co/Ndynk5Cq/download-1-removebg-preview.png" alt="Girish Saana" class="w-12 h-12 rounded-full shadow-md">
+</header>
+
+
+        <main id="ai-view" class="w-full max-w-2xl fade-in-up delay-3">
+            <!-- AI Response Card -->
+            <div id="response-card" class="glassmorphism p-6 rounded-2xl shadow-lg mb-2 text-left whitespace-pre-wrap response-card hidden">
+                <div id="loader" class="flex justify-center items-center p-8 hidden">
+                    <div class="bouncing-balls">
+                        <div class="bouncing-balls__ball"></div>
+                        <div class="bouncing-balls__ball"></div>
+                        <div class="bouncing-balls__ball"></div>
+                    </div>
+                </div>
+                <div id="ai-response"></div>
+            </div>
+            <!-- Stop Generating Button -->
+             <button id="stop-generation" class="hidden glassmorphism text-sm font-semibold py-2 px-4 rounded-full mb-4 hover:bg-white/20 dark:hover:bg-black/20 transition">
+                Stop Generating
+            </button>
+
+
+            <!-- Input Bar -->
+            <div class="flex items-center glassmorphism rounded-full shadow-md p-2 mb-4">
+                <input type="text" id="question" placeholder="Ask me anything..." class="flex-grow bg-transparent border-none focus:ring-0 focus:outline-none text-lg px-4 placeholder-gray-600 dark:placeholder-gray-400">
+                <button id="askButton" class="text-white rounded-full w-12 h-12 flex items-center justify-center hover:opacity-80 transition transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-green-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </button>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="flex flex-wrap justify-center gap-3">
+                <button class="quick-action glassmorphism shadow-sm rounded-full px-4 py-2 hover:bg-white/20 dark:hover:bg-black/20 transition">Me</button>
+                <button class="quick-action glassmorphism shadow-sm rounded-full px-4 py-2 hover:bg-white/20 dark:hover:bg-black/20 transition">Projects</button>
+                <button class="quick-action glassmorphism shadow-sm rounded-full px-4 py-2 hover:bg-white/20 dark:hover:bg-black/20 transition">Skills</button>
+                <button class="quick-action glassmorphism shadow-sm rounded-full px-4 py-2 hover:bg-white/20 dark:hover:bg-black/20 transition">Fun Facts</button>
+                <button class="quick-action glassmorphism shadow-sm rounded-full px-4 py-2 hover:bg-white/20 dark:hover:bg-black/20 transition">Contact</button>
+            </div>
+            
+            <!-- Download CV Button -->
+            <div class="mt-6 flex justify-center">
+  <a href="GirishSaanaResume.pdf" download="GirishSaanaResume.pdf" 
+     class="glassmorphism shadow-lg rounded-full px-6 py-3 hover:bg-white/20 dark:hover:bg-black/20 transition inline-flex items-center font-semibold">
+    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+    </svg>
+    Download CV
+  </a>
+</div>
+
+        </main>
+        
+        <main id="classic-view" class="w-full max-w-3xl hidden">
+            <div class="classic-view-card glassmorphism p-8 rounded-2xl shadow-lg text-left">
+                <!-- Classic view content will be generated here -->
+            </div>
+        </main>
+            
+        <!-- Social Links -->
+        <div id="social-links" class="mt-8 flex justify-center space-x-6">
+            <a href="https://linkedin.com/in/girish-saana-443018306/" target="_blank" class="hover:text-blue-600 dark:hover:text-white transition transform hover:scale-125">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+            </a>
+            <a href="https://github.com/girish2513" target="_blank" class="hover:text-gray-900 dark:hover:text-white transition transform hover:scale-125">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.65.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
+            </a>
+             <a href="mailto:girishsaana2513@gmail.com" class="hover:text-red-600 dark:hover:text-white transition transform hover:scale-125">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+<div id="project-modal" class="modal-backdrop">
+    <div class="modal-content">
+        <div class="p-8">
+            <!-- Close button -->
+            <button id="close-modal" class="absolute top-4 right-4 p-2 rounded-full hover:bg-white/20 dark:hover:bg-black/20 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <!-- Modal content will be inserted here -->
+            <div id="modal-body"></div>
+        </div>
+    </div>
+</div>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>
