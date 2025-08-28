@@ -128,6 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",  # Common port for VS Code Live Server
     "http://127.0.0.1:5500",
-    "https://ai-portfolio-fullstack-cvid-git-main-girish2513s-projects.vercel.app",# Also a common port for Live Server
+    "https://ai-portfolio-fullstack-cvid-git-main-girish2513s-projects.vercel.app",
+    "https://girish-saana.vercel.app/",# Also a common port for Live Server
     # Add other origins if your frontend is served from a different address
 ]
