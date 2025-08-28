@@ -185,7 +185,8 @@ async function handleQuery(question) {
 
     try {
         // const apiUrl = 'http://127.0.0.1:8000/api/chat/';
-        const apiUrl = 'https://portfolio-backend.vercel.app/api/chat/';
+        // const apiUrl = 'https://portfolio-backend.vercel.app/api/chat/';
+        const apiUrl = 'https://ai-portfolio-fullstack.vercel.app/api/chat/';
         const payload = {
             question: trimmedQuestion,
             history: conversationHistory,
