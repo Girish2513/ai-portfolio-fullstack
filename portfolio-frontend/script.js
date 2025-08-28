@@ -177,7 +177,7 @@ async function handleQuery(question) {
     stopGenerationButton.classList.add('hidden');
 
     try {
-        const apiUrl = 'ai-portfolio-fullstack-8ojxdgr7t-girish2513s-projects.vercel.app/api/chat/';
+        const apiUrl = 'https://ai-portfolio-fullstack.vercel.app/api/chat/';
         
         const payload = {
             question: trimmedQuestion,
