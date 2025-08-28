@@ -692,9 +692,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startRandomAnimation();
     });
 
-    const viewCountEl = document.getElementById('view-count-text');
-    const randomViews = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
-    viewCountEl.textContent = `${randomViews} Views`;
 
     const viewToggleButton = document.getElementById('view-toggle');
     const aiView = document.getElementById('ai-view');
