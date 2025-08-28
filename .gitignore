@@ -1,2 +1,3 @@
 portfolio_backend/venv/
 portfolio_backend/.env
+db.sqlite3
