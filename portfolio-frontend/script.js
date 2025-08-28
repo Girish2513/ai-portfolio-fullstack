@@ -199,21 +199,24 @@ async function handleQuery(question) {
             body: JSON.stringify(payload)
         });
 
-        let data; // ✅ declare variable first
+        // Always read the response body as text first
+const raw = await response.text();
 
-        try {
-            data = await response.json();
-        } catch {
-            const text = await response.text();
-            throw new Error(`API returned non-JSON (${response.status}): ${text.slice(0, 300)}`);
-        }
-        
-        if (!response.ok) {
-            const errorMsg = typeof data.error === "string"
-                ? data.error
-                : JSON.stringify(data.error, null, 2);
-            throw new Error(`API Error (${response.status}): ${errorMsg}`);
-        }
+let data;
+try {
+    data = JSON.parse(raw);   // Try to parse JSON
+} catch {
+    throw new Error(`API returned non-JSON (${response.status}): ${raw.slice(0, 300)}`);
+}
+
+// Handle API error cases
+if (!response.ok) {
+    const errorMsg = typeof data.error === "string"
+        ? data.error
+        : JSON.stringify(data.error, null, 2);
+    throw new Error(`API Error (${response.status}): ${errorMsg}`);
+}
+
 
 
         if (!response.ok) {
