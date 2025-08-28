@@ -199,19 +199,21 @@ async function handleQuery(question) {
             body: JSON.stringify(payload)
         });
 
-        try {
-    data = await response.json();
-} catch {
-    const text = await response.text();
-    throw new Error(`API returned non-JSON (${response.status}): ${text.slice(0, 300)}`);
-}
+        let data; // ✅ declare variable first
 
-if (!response.ok) {
-    const errorMsg = typeof data.error === "string"
-        ? data.error
-        : JSON.stringify(data.error, null, 2);
-    throw new Error(`API Error (${response.status}): ${errorMsg}`);
-}
+        try {
+            data = await response.json();
+        } catch {
+            const text = await response.text();
+            throw new Error(`API returned non-JSON (${response.status}): ${text.slice(0, 300)}`);
+        }
+        
+        if (!response.ok) {
+            const errorMsg = typeof data.error === "string"
+                ? data.error
+                : JSON.stringify(data.error, null, 2);
+            throw new Error(`API Error (${response.status}): ${errorMsg}`);
+        }
 
 
         if (!response.ok) {
