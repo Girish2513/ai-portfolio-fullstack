@@ -17,6 +17,10 @@ Including another URLconf
 # portfolio_project/urls.py
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponse   # ✅ Make sure this import is there
+
+def home(request):
+    return HttpResponse("Backend is working on Vercel!")   
 
 urlpatterns = [
     path('admin/', admin.site.urls),
