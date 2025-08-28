@@ -199,11 +199,18 @@ async function handleQuery(question) {
             body: JSON.stringify(payload)
         });
 
-        if (data.error) {
+        try {
+    data = await response.json();
+} catch {
+    const text = await response.text();
+    throw new Error(`API returned non-JSON (${response.status}): ${text.slice(0, 300)}`);
+}
+
+if (!response.ok) {
     const errorMsg = typeof data.error === "string"
         ? data.error
-        : JSON.stringify(data.error, null, 2);  // pretty-print objects
-    throw new Error(`API Error: ${errorMsg}`);
+        : JSON.stringify(data.error, null, 2);
+    throw new Error(`API Error (${response.status}): ${errorMsg}`);
 }
 
 
