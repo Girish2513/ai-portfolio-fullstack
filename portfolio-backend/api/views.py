@@ -10,6 +10,7 @@ load_dotenv()
 
 @csrf_exempt
 def chat_view(request):
+    print("API_KEY found?", bool(api_key))
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
