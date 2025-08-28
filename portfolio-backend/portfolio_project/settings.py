@@ -126,9 +126,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
+    "https://girish-saana.vercel.app",
     "http://localhost:5500",  # Common port for VS Code Live Server
-    "http://127.0.0.1:5500",
-    "https://girish-saana.vercel.app/",# Also a common port for Live Server
+    "http://127.0.0.1:5500",# Also a common port for Live Server
     # Add other origins if your frontend is served from a different address
 ]
 
