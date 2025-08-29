@@ -465,6 +465,15 @@ function generateEducationHTML(education) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    const homeAvatarButton = document.getElementById('home-avatar-button');
+
+    if (homeAvatarButton) {
+        homeAvatarButton.addEventListener('click', () => {
+            // This will navigate the user to your site's homepage.
+            window.location.href = '/'; 
+        });
+    }
     // Modal event listeners
     const closeModalBtn = document.getElementById('close-modal');
     const projectModal = document.getElementById('project-modal');
