@@ -18,7 +18,8 @@ A personalized, conversational AI chatbot that acts as a digital twin, answering
 
 ## Screenshots
 
-
+<img width="3197" height="1822" alt="image" src="https://github.com/user-attachments/assets/37548e69-b32b-4f10-b43d-c33b4ef7d25f" />
+Home Page
 
 ---
 
