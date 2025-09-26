@@ -60,7 +60,7 @@ def call_gemini(messages):
         gemini_contents.append({"role": role, "parts": [{"text": msg["content"]}]})
 
     headers = {"Content-Type": "application/json"}
-    api_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    api_url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={api_key}"
     payload = {"contents": gemini_contents}
 
     logger.info("Fallback: Attempting to call Google Gemini API...")
