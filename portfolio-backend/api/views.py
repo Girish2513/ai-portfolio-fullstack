@@ -24,7 +24,7 @@ def call_openrouter(messages):
         "Content-Type": "application/json",
     }
     payload = {
-        "model": "google/gemini-flash-1.5",
+        "model": "google/gemini-flash-2.5",
         "messages": messages
     }
 
