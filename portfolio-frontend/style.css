@@ -6,7 +6,6 @@
     --glass-border: rgba(255, 255, 255, 0.2);
     --accent-color: #3b82f6;
     --loader-color: #3b82f6;
-    --user-bubble-bg: var(--accent-color);
     --ai-bubble-bg: var(--glass-bg);
 }
 
@@ -18,7 +17,6 @@
     --glass-border: rgba(255, 255, 255, 0.1);
     --accent-color: #10b981;
     --loader-color: #f0f2f5;
-    --user-bubble-bg: var(--accent-color);
     --ai-bubble-bg: var(--glass-bg);
 }
 
@@ -58,7 +56,7 @@ body {
 }
 
 #askButton {
-    background-color: var(--accent-color);
+    background: linear-gradient(135deg, #6366f1, #a855f7);
 }
 #askButton:disabled {
     opacity: 0.5;
@@ -68,7 +66,7 @@ body {
 
 /* === AVATAR RING === */
 .avatar-ring {
-    background: linear-gradient(135deg, #3b82f6, #10b981, #e73c7e, #f59e0b);
+    background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899, #f59e0b);
     padding: 4px;
     border-radius: 9999px;
     display: inline-block;
@@ -80,7 +78,7 @@ body {
     border-radius: 9999px;
 }
 .avatar-ring-sm {
-    background: linear-gradient(135deg, #3b82f6, #10b981, #e73c7e, #f59e0b);
+    background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899, #f59e0b);
     padding: 2px;
     border-radius: 9999px;
     display: inline-block;
@@ -178,7 +176,7 @@ body {
 
 .user-bubble {
     align-self: flex-end;
-    background: var(--user-bubble-bg);
+    background: linear-gradient(135deg, #6366f1, #a855f7);
     color: white;
     border-bottom-right-radius: 0.25rem;
     font-weight: 500;
@@ -207,17 +205,20 @@ body {
 .chat-active {
     justify-content: flex-start;
     padding-top: 0;
+    height: 100vh;
 }
 .chat-active #ai-view {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    max-height: calc(100vh - 80px);
+    min-height: 0;
+    overflow: hidden;
 }
 .chat-active .chat-messages {
     flex: 1;
     max-height: none;
     min-height: 0;
+    overflow-y: auto;
 }
 .chat-active .input-area {
     flex-shrink: 0;

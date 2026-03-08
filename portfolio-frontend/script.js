@@ -160,21 +160,7 @@ function typewriterEffect(text, container) {
 
 function displayAboutMe(text, bubble) {
     bubble.innerHTML = '';
-    const flexContainer = document.createElement('div');
-    flexContainer.className = 'flex items-start gap-3';
-
-    const img = document.createElement('img');
-    img.src = 'https://i.ibb.co/WvJ5C2Hn/Pass-Port-Size-Photo.png';
-    img.alt = 'Girish Saana';
-    img.className = 'w-16 h-16 rounded-full shadow-lg flex-shrink-0';
-
-    const textContainer = document.createElement('div');
-    textContainer.className = 'flex-1 min-w-0';
-
-    flexContainer.appendChild(img);
-    flexContainer.appendChild(textContainer);
-    bubble.appendChild(flexContainer);
-    typewriterEffect(text, textContainer);
+    typewriterEffect(text, bubble);
 }
 
 function displayContactInfo(bubble) {
