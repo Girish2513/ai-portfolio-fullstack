@@ -1,71 +1,6 @@
-// Import all data modules
-import personalData from './data/personal.js';
-import educationData from './data/education.js';
-import skillsData from './data/skills.js';
+// Import data modules (used for frontend rendering)
 import projectsData from './data/projects.js';
-import achievementsData from './data/achievements.js';
 import contactData from './data/contact.js';
-import professionalData from './data/professional.js';
-
-// Combine all data for the knowledge base
-const combinedData = {
-    personal: personalData,
-    education: educationData,
-    skills: skillsData,
-    projects: projectsData,
-    achievements: achievementsData,
-    contact: contactData,
-    professional: professionalData
-};
-
-// Convert data to text format for AI processing
-function dataToText(data) {
-    let text = `# Girish Saana - Professional Portfolio Information\n\n`;
-    text += `## Personal Information:\n`;
-    text += `- Name: ${data.personal.full_name} (Age: ${data.personal.age})\n`;
-    text += `- Location: ${data.personal.location}\n`;
-    text += `- Languages: ${data.personal.languages.join(', ')}\n`;
-    text += `- Family: Father - ${data.personal.family.father}, Mother - ${data.personal.family.mother}\n`;
-    text += `- Personality: ${data.personal.personality.strengths.join(', ')}\n`;
-    text += `- Interests: ${data.personal.interests.hobbies.join(', ')}\n\n`;
-    text += `## Education:\n`;
-    text += `- ${data.education.btech.degree} from ${data.education.btech.college} (${data.education.btech.years}) - CGPA: ${data.education.btech.cgpa}\n`;
-    text += `- ${data.education.intermediate.stream} from ${data.education.intermediate.college} - ${data.education.intermediate.percentage}\n`;
-    text += `- High School from ${data.education.school.name} - ${data.education.school.cgpa} CGPA\n\n`;
-    text += `## Technical Skills:\n`;
-    Object.entries(data.skills).forEach(([category, skills]) => {
-        const formattedCategory = category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-        text += `- ${formattedCategory}: ${skills.join(', ')}\n`;
-    });
-    text += `\n`;
-    text += `## Projects:\n`;
-    data.projects.forEach((project, index) => {
-        text += `${index + 1}. ${project.name}:\n`;
-        text += `   - Description: ${project.description}\n`;
-        text += `   - Technologies: ${project.technologies.join(', ')}\n`;
-        text += `   - Impact: ${project.impact}\n`;
-        text += `   - GitHub: ${project.url}\n\n`;
-    });
-    text += `## Professional Goals:\n`;
-    text += `- Objective: ${data.professional.career_objective}\n`;
-    text += `- Preferred Roles: ${data.professional.preferred_roles.join(', ')}\n`;
-    text += `- Industry Interests: ${data.professional.industry_interests.join(', ')}\n\n`;
-    text += `## Achievements:\n`;
-    text += `- Academic: Strong academic record across all levels\n`;
-    text += `- Technical: Solved 200+ LeetCode problems, Multiple certifications\n`;
-    text += `- Leadership: Cricket Team Captain, Sports Club Head\n\n`;
-    text += `## Contact Information:\n`;
-    text += `- Email: ${data.contact.email}\n`;
-    text += `- Phone: ${data.contact.phone}\n`;
-    text += `- LinkedIn: ${data.contact.social_links.linkedin.url}\n`;
-    text += `- GitHub: ${data.contact.social_links.github.url}\n`;
-    text += `- LeetCode: ${data.contact.social_links.leetcode.url}\n`;
-    text += `- Availability: ${data.contact.availability.status}\n`;
-    return text;
-}
-
-// Generate knowledge base
-const knowledgeBase = dataToText(combinedData);
 
 // Global variables
 let conversationCount = 0;
@@ -90,6 +25,7 @@ askButton.addEventListener('click', () => handleQuery(questionInput.value));
 questionInput.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') handleQuery(questionInput.value);
 });
+questionInput.setAttribute('maxlength', '1000');
 
 quickActionButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -181,8 +117,7 @@ async function handleQuery(question) {
         
         const payload = {
             question: trimmedQuestion,
-            history: conversationHistory,
-            context: knowledgeBase
+            history: conversationHistory
         };
 
         const response = await fetch(apiUrl, {
@@ -203,8 +138,8 @@ async function handleQuery(question) {
         if (result.reply) {
             const responseText = result.reply;
 
-            conversationHistory.push({ role: "user", parts: [{ text: trimmedQuestion }] });
-            conversationHistory.push({ role: "model", parts: [{ text: responseText }] });
+            conversationHistory.push({ role: "user", content: trimmedQuestion });
+            conversationHistory.push({ role: "assistant", content: responseText });
 
             const lowerCaseQuestion = trimmedQuestion.toLowerCase();
 
@@ -235,7 +170,7 @@ async function handleQuery(question) {
     } catch (err) {
         console.error("Error:", err);
         loader.classList.add('hidden');
-        typewriterEffect(`An error occurred: ${err.message}. Make sure your Django server is running.`);
+        typewriterEffect(`An error occurred. Please try again in a moment.`);
     }
 }
 
@@ -422,46 +357,6 @@ function closeModal() {
     const modal = document.getElementById('project-modal');
     modal.classList.remove('active');
     document.body.style.overflow = 'auto';
-}
-
-function generateClassicView() {
-    const container = document.querySelector('#classic-view .classic-view-card');
-    container.innerHTML = `
-        <h2 class="text-3xl font-bold mb-4">Skills & Expertise</h2>
-        <div class="mb-4">${generateSkillHTML(skillsData)}</div>
-        <h2 class="text-3xl font-bold mb-4 mt-8">Projects</h2>
-        <div class="mb-4">${generateProjectHTML(projectsData)}</div>
-        <h2 class="text-3xl font-bold mb-4 mt-8">Education</h2>
-        <div class="mb-4">${generateEducationHTML(educationData)}</div>
-    `;
-}
-
-function generateSkillHTML(skills) {
-    const allSkills = Object.values(skills).flat();
-    return `<div class="structured-tags">${allSkills.map(s => `<span>${s}</span>`).join('')}</div>`;
-}
-
-function generateProjectHTML(projects) {
-    return projects.map(p => `
-        <div class="project-item">
-            <strong>${p.name}</strong>
-            <p>${p.description} (Impact: ${p.impact})</p>
-            <a href="${p.url}" target="_blank" class="text-sm font-semibold">View on GitHub &rarr;</a>
-        </div>
-    `).join('');
-}
-
-function generateEducationHTML(education) {
-    return `
-        <div class="project-item">
-            <strong>${education.btech.degree}</strong>
-            <p>${education.btech.college} (${education.btech.years}) - CGPA: ${education.btech.cgpa}</p>
-        </div>
-        <div class="project-item">
-            <strong>Intermediate (${education.intermediate.stream})</strong>
-            <p>${education.intermediate.college} (${education.intermediate.years}) - Percentage: ${education.intermediate.percentage}</p>
-        </div>
-    `;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -703,22 +598,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    const viewToggleButton = document.getElementById('view-toggle');
-    const aiView = document.getElementById('ai-view');
-    const classicView = document.getElementById('classic-view');
-    const viewToggleText = document.getElementById('view-toggle-text');
-    
-    generateClassicView();
-
-    viewToggleButton.addEventListener('click', () => {
-        if(aiView.classList.contains('hidden')) {
-            aiView.classList.remove('hidden');
-            classicView.classList.add('hidden');
-            viewToggleText.textContent = "Classic View";
-        } else {
-            aiView.classList.add('hidden');
-            classicView.classList.remove('hidden');
-            viewToggleText.textContent = "AI View";
-        }
-    });
 });

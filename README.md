@@ -1,78 +1,68 @@
-# 🤖 AI-Powered Portfolio Chatbot
+# AI-Powered Portfolio Chatbot
 
 A personalized, conversational AI chatbot that acts as a digital twin, answering questions about my professional profile, skills, and projects. This project uses a Django backend to connect with large language models and a vanilla JavaScript frontend for the user interface.
 
-## 🚀 Live Demo
+## Live Demo
 
-**[🔗 Click here to chat with my digital twin! →](https://girish-saana.vercel.app)**
-
----
-
-## ✨ Features
-
-* **💬 Conversational AI:** Ask questions in natural language about my skills, education, projects, and more.
-* **📊 Dynamic Knowledge Base:** The AI's context is built directly from my portfolio data, ensuring accurate and up-to-date responses.
-* **🔄 API Fallback System:** Utilizes the OpenRouter API as the primary service, with an automatic fallback to the Google Gemini API to ensure high availability.
-* **🎨 Interactive UI:** A clean, responsive chat interface with typewriter effects for AI responses.
-* **📋 Structured Responses:** Displays specialized information like projects and skills in rich, formatted cards.
+**[Click here to chat with my digital twin!](https://girish-saana.vercel.app)**
 
 ---
 
-## 📸 Screenshots
+## Features
 
-<img width="3197" height="1822" alt="AI Portfolio Chatbot Home Page" src="https://github.com/user-attachments/assets/37548e69-b32b-4f10-b43d-c33b4ef7d25f" />
-
-*Home Page - Interactive chat interface*
+* **Conversational AI:** Ask questions in natural language about my skills, education, projects, and more.
+* **Dynamic Knowledge Base:** The AI's context is built directly from my portfolio data, ensuring accurate and up-to-date responses.
+* **5-Tier API Fallback System:** Cascading fallback across Groq, OpenRouter, Together AI, Hugging Face, and Cohere for high availability.
+* **Interactive UI:** A clean, responsive chat interface with typewriter effects, animated canvas backgrounds, and glassmorphism design.
+* **Structured Responses:** Displays specialized information like projects and skills in rich, formatted cards.
 
 ---
 
-## 🛠️ Tech Stack
-
-This project is a full-stack application built with the following technologies:
+## Tech Stack
 
 ### Backend
-* **🐍 Python** - Core programming language
-* **🎯 Django** - Web framework for robust backend development
+* **Python** - Core programming language
+* **Django** - Web framework for robust backend development
 
-### Frontend  
-* **🌐 HTML5** - Modern markup structure
-* **🎨 CSS3** - Responsive styling and animations
-* **⚡ Vanilla JavaScript** - Interactive client-side functionality
+### Frontend
+* **HTML5** - Modern markup structure
+* **CSS3** - Responsive styling and animations
+* **Tailwind CSS** - Utility-first CSS framework
+* **Vanilla JavaScript** - Interactive client-side functionality (ES Modules)
 
-### AI & APIs
-* **🧠 Google Gemini Flash 1.5** - Primary language model via OpenRouter API
-* **🔧 OpenRouter API** - Primary AI service with fallback support
-* **📡 Google Gemini API** - Backup AI service for high availability
+### AI & APIs (Cascading Fallback)
+1. **Groq** (Llama 3.3 70B) - Primary, fastest
+2. **OpenRouter** (Llama 3.1 / Mistral / Gemma free models) - Fallback 1
+3. **Together AI** (Llama 3.1 8B) - Fallback 2
+4. **Hugging Face** (Mistral 7B) - Fallback 3
+5. **Cohere** (Command R+) - Fallback 4
 
 ### Deployment
-* **☁️ Vercel** - Modern hosting platform for both frontend and backend
+* **Vercel** - Hosting for both frontend and backend
 
 ---
 
-## 🚀 Local Setup and Installation
+## Local Setup and Installation
 
-To run this project on your local machine, you will need to set up the backend and frontend separately.
-
-### 📋 Prerequisites
+### Prerequisites
 
 * **Python 3.9+**
 * **Git**
-* **Code editor** (VS Code recommended)
 
-### 📥 Cloning
+### Cloning
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/girish2513/ai-portfolio-fullstack.git
-   cd ai-portfolio-fullstack
-   ```
+```bash
+git clone https://github.com/girish2513/ai-portfolio-fullstack.git
+cd ai-portfolio-fullstack
+```
 
-### 🔧 Backend Setup
+### Backend Setup
 
 1. **Create a virtual environment:**
    ```bash
+   cd portfolio-backend
    python -m venv venv
-   source venv/Scripts/activate  # On Mac/Linux, use `source venv/bin/activate`
+   source venv/Scripts/activate  # On Mac/Linux: source venv/bin/activate
    ```
 
 2. **Install dependencies:**
@@ -81,48 +71,43 @@ To run this project on your local machine, you will need to set up the backend a
    ```
 
 3. **Set up environment variables:**
-   * Create a file named `.env` in the root of the backend project folder.
-   * Add your secret API keys to this file. This file is ignored by Git and should not be committed.
+   Create a `.env` file in the `portfolio-backend/` directory:
    ```env
-   # .env file
-   OPENROUTER_API_KEY="your_openrouter_api_key_here"
-   GEMINI_API_KEY="your_google_gemini_api_key_here"
    DJANGO_SECRET_KEY="your_django_secret_key_here"
+   GROQ_API_KEY="your_groq_api_key_here"
+   OPENROUTER_API_KEY="your_openrouter_api_key_here"
+   TOGETHER_API_KEY="your_together_api_key_here"
+   HUGGINGFACE_API_KEY="your_huggingface_api_key_here"
+   COHERE_API_KEY="your_cohere_api_key_here"
    ```
+   You only need at least one AI API key configured. The system will skip unconfigured providers.
 
 4. **Run the development server:**
    ```bash
    python manage.py runserver
    ```
-   The backend will now be running at `http://127.0.0.1:8000` 🎉
+   The backend will be running at `http://127.0.0.1:8000`.
 
-### 🎨 Frontend Setup
+### Frontend Setup
 
 1. **Update the API URL:**
-   * Open the `script.js` file.
-   * Find the `apiUrl` constant and make sure it points to your local backend server for development:
+   Open `portfolio-frontend/script.js` and update `apiUrl` to point to your local backend:
    ```javascript
    const apiUrl = 'http://127.0.0.1:8000/api/chat/';
    ```
 
 2. **Run the frontend:**
-   * There is no build step required for the vanilla JS frontend. Simply open the `index.html` file in your browser.
-   * **💡 Tip:** Using a tool like the VS Code "Live Server" extension is recommended for auto-refresh functionality.
+   Open `portfolio-frontend/index.html` in your browser. Using VS Code "Live Server" extension is recommended.
 
 ---
 
-## 🌐 Deployment
+## Deployment
 
-This project is deployed on **Vercel**. The `main` branch of each repository (frontend and backend) is automatically deployed to production. Environment variables for production are configured in the Vercel project settings.
-
-### 📝 Deployment Notes
-* **Frontend:** Automatically deploys from `main` branch
-* **Backend:** Automatically deploys from `main` branch  
-* **Environment Variables:** Configure in Vercel dashboard for production
+Deployed on **Vercel**. The `main` branch is automatically deployed to production. Environment variables are configured in the Vercel project settings.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -134,16 +119,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-## 📞 Contact
+## Contact
 
 **Girish Saana** - girishsaana2513@gmail.com
 
 **Project Link:** [https://github.com/girish2513/ai-portfolio-fullstack](https://github.com/girish2513/ai-portfolio-fullstack)
-
----
-
-## 🙏 Acknowledgments
-
-* Thanks to OpenRouter for providing access to multiple AI models
-* Google Gemini for the powerful language model capabilities
-* Vercel for seamless deployment experience

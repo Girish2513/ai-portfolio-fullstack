@@ -18,12 +18,13 @@
     --loader-color: #f0f2f5;
 }
 
-body { 
-    font-family: 'Inter', sans-serif; 
-    overflow: hidden; 
-    background-color: var(--bg-color); 
-    color: var(--text-primary); 
-    transition: background-color 0.5s ease; 
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    transition: background-color 0.5s ease;
 }
 #background-canvas { 
     position: absolute; 
@@ -43,10 +44,10 @@ body {
     position: relative; 
     z-index: 10; 
 }
-.response-card, .classic-view-card { 
-    max-height: 50vh; 
-    overflow-y: auto; 
-    transition: all 0.5s ease-in-out; 
+.response-card {
+    max-height: 50vh;
+    overflow-y: auto;
+    transition: all 0.5s ease-in-out;
 }
 .glassmorphism { 
     background: var(--glass-bg); 
@@ -112,18 +113,7 @@ body {
 .dark .structured-tag { 
     background-color: #4b5563; 
 }
-.project-item { 
-    margin-bottom: 1rem; 
-}
-.project-item strong { 
-    font-weight: 700; 
-}
-.project-item a { 
-    color: var(--accent-color); 
-    text-decoration: underline; 
-}
-
-/* --- NEW CHAT VIEW STYLES --- */
+/* --- CHAT VIEW STYLES --- */
 .chat-active {
     justify-content: flex-start;
     padding-top: 0;

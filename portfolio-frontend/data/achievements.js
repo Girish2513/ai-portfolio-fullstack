@@ -2,7 +2,7 @@ const achievementsData = {
     academic: [
         {
             title: "B.Tech CSE (AI & ML)",
-            description: "CGPA 7.1/10",
+            description: "Malla Reddy College of Engineering, Hyderabad",
             year: "2025"
         },
         {
@@ -16,12 +16,17 @@ const achievementsData = {
             year: "2019"
         }
     ],
-    
+
     technical: [
         {
             title: "LeetCode Problem Solver",
             description: "Solved 200+ coding problems across various difficulty levels",
             category: "Programming"
+        },
+        {
+            title: "Machine Learning with Python",
+            description: "IBM (Coursera) Certification",
+            category: "Certification"
         },
         {
             title: "HackerRank Certified",
@@ -34,22 +39,35 @@ const achievementsData = {
             category: "Certification"
         }
     ],
-    
+
     leadership: [
         {
             title: "Cricket Team Captain",
             description: "Led college cricket team in multiple inter-college tournaments with winning record",
-            duration: "2022–2025",
+            duration: "2022-2025",
             impact: "Team leadership and strategic planning"
         },
         {
             title: "Sports Club Head (Plexus Group)",
             description: "Organized intra-college sports events and coordinated practice sessions",
-            duration: "2023–2024",
+            duration: "2023-2024",
             impact: "Event management and team coordination"
         }
     ],
-    
+
+    professional: [
+        {
+            title: "Lead Developer - School Portal",
+            description: "Led development of Navodaya High School portal serving 2,800+ users as freelance developer at WebAura",
+            impact: "Full product lifecycle management"
+        },
+        {
+            title: "React Native App Developer",
+            description: "Built Digit LMS Android Application at SubmitTech Solutions internship",
+            impact: "Agile team collaboration"
+        }
+    ],
+
     community: [
         {
             title: "Coding Workshop Volunteer",

@@ -1,7 +1,8 @@
 const contactData = {
     email: "girishsaana2513@gmail.com",
+    phone: "+91 63033 89916",
     location: "Hyderabad, Telangana, India",
-    
+
     social_links: {
         linkedin: {
             url: "https://linkedin.com/in/girish-saana-443018306/",
@@ -16,7 +17,7 @@ const contactData = {
             username: "GirishSaana"
         }
     },
-    
+
     availability: {
         status: "Open to opportunities",
         preferred_roles: ["ML Engineer", "Software Development Engineer", "Full-Stack Developer"],
@@ -26,7 +27,7 @@ const contactData = {
         relocation: true,
         notice_period: "Immediate"
     },
-    
+
     contact_preferences: {
         best_time: "9 AM - 6 PM IST",
         preferred_method: "Email",

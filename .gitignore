@@ -1,3 +1,6 @@
-portfolio_backend/venv/
-portfolio_backend/.env
+venv/
+.env
 db.sqlite3
+__pycache__/
+*.pyc
+*.pyo

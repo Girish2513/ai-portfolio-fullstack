@@ -1,60 +1,43 @@
 const skillsData = {
-    programming_languages: ["Python", "SQL", "JavaScript", "HTML", "CSS"],
-    
-    machine_learning: [
-        "Scikit-learn", 
-        "Keras", 
-        "TensorFlow", 
-        "Model Training", 
-        "Feature Engineering"
+    languages: ["Python", "JavaScript (ES6+)", "SQL"],
+
+    frontend: [
+        "React.js",
+        "React Native",
+        "Vite",
+        "HTML5",
+        "CSS3"
     ],
-    
-    data_manipulation: [
-        "Pandas", 
-        "NumPy", 
-        "Data Cleaning", 
-        "Data Processing"
+
+    backend: [
+        "Django",
+        "FastAPI",
+        "REST APIs"
     ],
-    
-    data_visualization: [
-        "Matplotlib", 
-        "Seaborn", 
-        "Data Analysis", 
-        "Statistical Visualization"
-    ],
-    
-    data_structures_algorithms: [
-        "Arrays", 
-        "Linked Lists", 
-        "Stacks", 
-        "Queues", 
-        "Trees", 
-        "Sorting", 
-        "Searching", 
-        "Recursion",
-        "Dynamic Programming"
-    ],
-    
-    tools_platforms: [
-        "Git", 
-        "GitHub", 
-        "VS Code", 
-        "Jupyter Notebook",
-        "Command Line"
-    ],
-    
+
     databases: [
-        "MySQL", 
-        "Database Design", 
-        "Query Optimization"
+        "MySQL",
+        "PostgreSQL"
     ],
-    
-    soft_skills: [
-        "Leadership", 
-        "Problem Solving", 
-        "Team Management", 
-        "Fast Learning", 
-        "Communication",
+
+    machine_learning: [
+        "Scikit-learn",
+        "Pandas",
+        "NumPy"
+    ],
+
+    cs_fundamentals: [
+        "Data Structures & Algorithms",
+        "DBMS",
+        "OS",
+        "CN"
+    ],
+
+    tools: [
+        "Git",
+        "GitHub",
+        "VS Code",
+        "Postman"
     ]
 };
 
