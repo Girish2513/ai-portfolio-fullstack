@@ -2,7 +2,7 @@ KNOWLEDGE_BASE = """
 # Girish Saana - Professional Portfolio Information
 
 ## Profile:
-Software Developer (CSE AI & ML, 2021-2025) with proven experience shipping scalable web apps. Skilled in React, Django, and AI integration. Lead Developer for a client project serving 2,800+ users.
+Software Developer currently working as Full Stack Developer (Associate) at Win Information Technology Pvt Ltd. Hands-on experience building web and mobile applications using React, React Native, and Next.js. Previously architected a client portal serving 2,800+ users. Skilled in full stack development, AI integration, and database handling with PostgreSQL.
 
 ## Personal Information:
 - Name: Girish Saana (Age: 23)
@@ -20,21 +20,28 @@ Software Developer (CSE AI & ML, 2021-2025) with proven experience shipping scal
 
 ## Technical Skills:
 - Languages: Python, JavaScript (ES6+), SQL
-- Frontend: React.js, React Native, Vite, HTML5, CSS3
+- Frontend: React.js, React Native, Next.js, Vite, HTML5, CSS3
 - Backend: Django, FastAPI, REST APIs
-- Databases: MySQL, PostgreSQL
+- Databases: PostgreSQL, MySQL
 - Machine Learning: Scikit-learn, Pandas, NumPy
 - CS Fundamentals: Data Structures & Algorithms, DBMS, OS, CN
 - Tools: Git, GitHub, VS Code, Postman
 
 ## Work Experience:
 
-1. WebAura (Freelance) - Software Developer (Aug 2025 - Nov 2025), Hyderabad, India
+1. Win Information Technology Pvt Ltd - Full Stack Developer (Associate) (Jan 2026 - Present), Hyderabad, India
+   - Currently working on the Choithrams Retail Merchandising Platform, used by field sales teams and admin users.
+   - Developing features in a React Native mobile application for field operations.
+   - Building UI components using Next.js and React for the admin web portal.
+   - Using PostgreSQL for data handling and query operations.
+   - Integrating frontend with backend APIs and fixing issues during development.
+
+2. WebAura (Freelance) - Software Developer (Aug 2025 - Nov 2025), Hyderabad, India
    - Architected the official portal for Navodaya High School (2,800+ users) using React.js and Vite, achieving a 95+ performance score.
    - Led the full product lifecycle from client requirements to live deployment, digitizing admissions and alumni.
    - Live Project: navodayahighschool.online
 
-2. SubmitTech Solutions - Software Developer Intern (Jun 2025 - Jul 2025), Hyderabad, India
+3. SubmitTech Solutions - Software Developer Intern (Jun 2025 - Jul 2025), Hyderabad, India
    - Built the Digit LMS Android Application using React Native for course, assignment, and progress.
    - Developed reusable frontend components and integrated REST APIs for authentication and course data.
    - Collaborated in an agile team environment, gaining practical exposure to full stack development.
@@ -57,8 +64,9 @@ Software Developer (CSE AI & ML, 2021-2025) with proven experience shipping scal
    - GitHub: https://github.com/Girish2513/SmartNutri
 
 ## Professional Goals:
-- Objective: Seeking opportunities as an ML Engineer or Software Development Engineer to apply AI/ML expertise and problem-solving skills in building scalable software solutions
-- Preferred Roles: Machine Learning Engineer, Software Development Engineer, Full-Stack Developer, Data Scientist, AI Engineer
+- Current Role: Full Stack Developer (Associate) at Win Information Technology Pvt Ltd since Jan 2026, working on the Choithrams Retail Merchandising Platform with React Native, Next.js, and PostgreSQL.
+- Objective: Growing as a Full Stack Developer while expanding into AI/ML engineering, applying problem-solving skills to build scalable software solutions.
+- Preferred Roles: Full-Stack Developer, Software Development Engineer, Machine Learning Engineer, AI Engineer, Data Scientist
 - Industry Interests: Artificial Intelligence, Machine Learning, Data Science, Web Development, EdTech, HealthTech, FinTech
 
 ## Achievements:
@@ -74,5 +82,5 @@ Software Developer (CSE AI & ML, 2021-2025) with proven experience shipping scal
 - LinkedIn: https://linkedin.com/in/girish-saana-443018306/
 - GitHub: https://github.com/girish2513
 - LeetCode: https://leetcode.com/GirishSaana
-- Availability: Open to opportunities (Immediate)
+- Availability: Currently employed full-time at Win Information Technology Pvt Ltd (since Jan 2026)
 """

@@ -4,6 +4,7 @@ const skillsData = {
     frontend: [
         "React.js",
         "React Native",
+        "Next.js",
         "Vite",
         "HTML5",
         "CSS3"

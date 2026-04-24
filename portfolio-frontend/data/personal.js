@@ -15,7 +15,7 @@ const personalData = {
     lifestyle: {
         wake_time: "4-5 AM",
         sleep_time: "9 PM",
-        status: "Recent Graduate (2025)"
+        status: "Full Stack Developer (Associate) at Win Information Technology Pvt Ltd (since Jan 2026)"
     },
     personality: {
         strengths: ["Problem solving", "Fast learning", "Attention to detail"],

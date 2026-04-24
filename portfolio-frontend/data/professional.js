@@ -1,11 +1,24 @@
 const professionalData = {
-    profile: "Software Developer (CSE AI & ML, 2021-2025) with proven experience shipping scalable web apps. Skilled in React, Django, and AI integration. Lead Developer for a client project serving 2,800+ users.",
+    profile: "Software Developer currently working as Full Stack Developer (Associate) at Win Information Technology Pvt Ltd. Hands-on experience building web and mobile applications using React, React Native, and Next.js. Previously architected a client portal serving 2,800+ users. Skilled in full stack development, AI integration, and database handling with PostgreSQL.",
 
-    career_objective: "Seeking opportunities as an ML Engineer or Software Development Engineer to apply AI/ML expertise and problem-solving skills in building scalable software solutions",
+    career_objective: "Full Stack Developer at Win IT, building web and mobile applications with React, React Native, Next.js, and PostgreSQL. Passionate about scaling into AI/ML engineering and building impactful software solutions.",
 
-    experience_level: "Professional (Freelance + Internship)",
+    experience_level: "Full-time (Associate) + Freelance + Internship",
 
     experience: [
+        {
+            company: "Win Information Technology Pvt Ltd",
+            role: "Full Stack Developer (Associate)",
+            duration: "Jan 2026 - Present",
+            location: "Hyderabad, India",
+            highlights: [
+                "Working on the Choithrams Retail Merchandising Platform, used by field sales teams and admin users.",
+                "Developing features in a React Native mobile application for field operations.",
+                "Building UI components using Next.js and React for the admin web portal.",
+                "Using PostgreSQL for data handling and query operations.",
+                "Integrating frontend with backend APIs and fixing issues during development."
+            ]
+        },
         {
             company: "WebAura (Freelance)",
             role: "Software Developer",
