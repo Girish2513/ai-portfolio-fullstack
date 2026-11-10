@@ -4,6 +4,7 @@ import time
 import logging
 import requests
 from collections import defaultdict
+from functools import lru_cache
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from . import prompts
@@ -18,6 +19,15 @@ MAX_HISTORY_TURNS = 50
 _rate_limit_cache = defaultdict(list)
 RATE_LIMIT_WINDOW = 60  # seconds
 RATE_LIMIT_MAX_REQUESTS = 20  # per window
+GROQ_MODELS_URL = "https://api.groq.com/openai/v1/models"
+GROQ_CHAT_URL = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_MODEL_CACHE_SECONDS = 300
+GROQ_PREFERRED_MODELS = (
+    "openai/gpt-oss-20b",
+    "openai/gpt-oss-120b",
+    "qwen/qwen3.8-27b",
+    "allam-2-7b",
+)
 
 
 def get_client_ip(request):
@@ -37,7 +47,7 @@ def is_rate_limited(ip):
 
 
 # === GROQ API (Primary) ===
-def call_groq(messages):
+def _call_groq_single(messages):
     """Primary: Groq API - Fast and free"""
     api_key = os.environ.get('GROQ_API_KEY')
     if not api_key:
@@ -49,7 +59,7 @@ def call_groq(messages):
     }
 
     payload = {
-        "model": "llama-3.3-70b-versatile",
+        "model": "openai/gpt-oss-20b",
         "messages": messages,
         "temperature": 0.7,
         "max_tokens": 2048
@@ -63,6 +73,66 @@ def call_groq(messages):
     )
     resp.raise_for_status()
     return resp.json()["choices"][0]["message"]["content"]
+
+
+@lru_cache(maxsize=2)
+def _active_groq_models(cache_key, api_key):
+    response = requests.get(
+        GROQ_MODELS_URL,
+        headers={"Authorization": f"Bearer {api_key}"},
+        timeout=10,
+    )
+    response.raise_for_status()
+    active_ids = {
+        model.get("id")
+        for model in response.json().get("data", [])
+        if model.get("active") and model.get("id")
+    }
+    return tuple(model for model in GROQ_PREFERRED_MODELS if model in active_ids)
+
+
+def call_groq(messages):
+    """Use active Groq chat models and survive individual model failures."""
+    api_key = os.environ.get('GROQ_API_KEY')
+    if not api_key:
+        raise ValueError("GROQ_API_KEY not configured")
+
+    models = _active_groq_models(
+        int(time.time() // GROQ_MODEL_CACHE_SECONDS),
+        api_key,
+    )
+    if not models:
+        raise RuntimeError("No active Groq chat models are configured")
+
+    headers = {
+        "Authorization": f"******",
+        "Content-Type": "application/json",
+    }
+    last_error = None
+    for model in models:
+        try:
+            response = requests.post(
+                GROQ_CHAT_URL,
+                headers=headers,
+                json={
+                    "model": model,
+                    "messages": messages,
+                    "temperature": 0.7,
+                    "max_tokens": 2048,
+                },
+                timeout=30,
+            )
+            response.raise_for_status()
+            return response.json()["choices"][0]["message"]["content"]
+        except requests.exceptions.HTTPError as error:
+            last_error = error
+            logger.warning(
+                "Groq model %s failed (HTTP %s)",
+                model,
+                response.status_code,
+            )
+
+    raise last_error or RuntimeError("All active Groq models failed")
 
 
 # === OpenRouter API (Fallback 1) ===
