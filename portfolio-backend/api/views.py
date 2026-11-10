@@ -30,6 +30,13 @@ GROQ_PREFERRED_MODELS = (
 )
 
 
+def _groq_headers(api_key):
+    return {
+        "Authorization": "Bearer " + api_key.strip(),
+        "Content-Type": "application/json",
+    }
+
+
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -108,6 +115,7 @@ def call_groq(messages):
         "Authorization": f"******",
         "Content-Type": "application/json",
     }
+    headers = _groq_headers(api_key)
     last_error = None
     for model in models:
         try:
@@ -133,6 +141,27 @@ def call_groq(messages):
             )
 
     raise last_error or RuntimeError("All active Groq models failed")
+
+
+def call_groq(messages):
+    """Primary: Groq API - Fast and free."""
+    api_key = os.environ.get('GROQ_API_KEY')
+    if not api_key:
+        raise ValueError("GROQ_API_KEY not configured")
+
+    response = requests.post(
+        GROQ_CHAT_URL,
+        headers=_groq_headers(api_key),
+        json={
+            "model": "openai/gpt-oss-20b",
+            "messages": messages,
+            "temperature": 0.7,
+            "max_tokens": 2048,
+        },
+        timeout=30,
+    )
+    response.raise_for_status()
+    return response.json()["choices"][0]["message"]["content"]
 
 
 # === OpenRouter API (Fallback 1) ===
